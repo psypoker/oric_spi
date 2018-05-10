@@ -20,10 +20,10 @@
 // port A 
 
 
- //SCLK — Serial Clock, Horloge (généré par le maître)
- //MOSI — Master Output, Slave Input (généré par le maître)
- //MISO — Master Input, Slave Output (généré par l'esclave)
- //SS — Slave Select, Actif à l'état bas (généré par le maître)
+ //SCLK â€” Serial Clock, Horloge (gÃ©nÃ©rÃ© par le maÃ®tre)
+ //MOSI â€” Master Output, Slave Input (gÃ©nÃ©rÃ© par le maÃ®tre)
+ //MISO â€” Master Input, Slave Output (gÃ©nÃ©rÃ© par l'esclave)
+ //SS â€” Slave Select, Actif Ã  l'Ã©tat bas (gÃ©nÃ©rÃ© par le maÃ®tre)
   
 #define WAIT	16
  
@@ -128,15 +128,14 @@ gorun
   
 
   	ldx SAVE_RETSTACK
- 
-	lda RUN
- 	sta $101,x
-	lda RUN+1
-	sta $102,x
-
-//	jsr $f8b8  // reset via nmi etc...????
-
+	
 	txs
+
+	lda RUN+1
+ 	pha
+	lda RUN
+	pha
+	
 	cli
 
 	rts
@@ -215,7 +214,7 @@ _deselect
 _read_byte
 .(
 ;  MISO<<<<<<<<<<+ 0	       8cyc  4c  8c   4c ...
-;  SCK>>>>>>>>>>+| 1   __.___/¯¯¯¯¯\__/¯¯¯¯\_/¯\_/¯\_/¯\_/¯\_/¯\_/¯\_
+;  SCK>>>>>>>>>>+| 1   __.___/Â¯Â¯Â¯Â¯Â¯\__/Â¯Â¯Â¯Â¯\_/Â¯\_/Â¯\_/Â¯\_/Â¯\_/Â¯\_/Â¯\_
 ;  MOSI>>>>>>>>+|| 0   __.__________________________________.__
 ;  SS>>>>>>>>>+||| 0   \_.__________________________________._/
 ;             ||||
@@ -337,7 +336,7 @@ _readTapeHelper
 	lda RUN+1
 	sbc #0
 	sta RUN+1
-
+	 
 
 	ldx retstack
 	stx SAVE_RETSTACK
@@ -373,7 +372,7 @@ loop
 	bne skip
 	lda #0 
 	sta $bb80+35
-	bne skip2
+	beq skip2
 skip
 	inc $bb80+35
 skip2
@@ -615,7 +614,7 @@ _transact_byte		// bit 7 en premier
 .(
 
 INPUT = reg5
-OUTPUT = reg6
+OUTPUT = reg1
 
   	sta INPUT
 ;		       M M
@@ -1011,7 +1010,7 @@ skip
 	rts
 .)
  
-_readByte // y preservé !
+_readByte // y preservÃ© !
 .(
 	jsr _read_byte
 	tax
