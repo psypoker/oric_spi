@@ -20,10 +20,10 @@
 // port A 
 
 
- //SCLK — Serial Clock, Horloge (généré par le maître)
- //MOSI — Master Output, Slave Input (généré par le maître)
- //MISO — Master Input, Slave Output (généré par l'esclave)
- //SS — Slave Select, Actif à l'état bas (généré par le maître)
+ //SCLK â€” Serial Clock, Horloge (gÃ©nÃ©rÃ© par le maÃ®tre)
+ //MOSI â€” Master Output, Slave Input (gÃ©nÃ©rÃ© par le maÃ®tre)
+ //MISO â€” Master Input, Slave Output (gÃ©nÃ©rÃ© par l'esclave)
+ //SS â€” Slave Select, Actif Ã  l'Ã©tat bas (gÃ©nÃ©rÃ© par le maÃ®tre)
 #define MAXSTRINGBUFF 255  
 #define WAIT	16
 _stringbuff =  $aa00
@@ -238,9 +238,9 @@ _read_byte
 .(                            // 83333 bauds read byte...
 ;                         02468024680246802468     
 ;  MISO<<<<<<<<<<+ 0	        
-;  SCK>>>>>>>>>>+| 1     .___/¯¯¯\__/¯¯¯\__/¯¯¯\__..._____ 
+;  SCK>>>>>>>>>>+| 1     .___/Â¯Â¯Â¯\__/Â¯Â¯Â¯\__/Â¯Â¯Â¯\__..._____ 
 ;  MOSI>>>>>>>>+|| 0     .________________________...
-;  SS>>>>>>>>>+||| 0  ¯¯\.________________________..._/¯¯¯ 
+;  SS>>>>>>>>>+||| 0  Â¯Â¯\.________________________..._/Â¯Â¯Â¯ 
 ;             ||||
 ;														; times					SCK MISO
 	ldx #%00000010	// 2 cycles							; 2	 		    2        0   
@@ -370,7 +370,14 @@ SUM		= $80
 	sty SUM
 	sty SUM+1
 	
- 
+	sec
+	lda RUN
+	sbc #1
+	sta RUN
+	lda RUN+1
+	sbc #0
+	sta RUN+1
+
 	jmp _readTape
  .)
 
@@ -637,7 +644,7 @@ EOS_OR_256
  
 
  
-_readByte // y preservé !
+_readByte // y preservÃ© !
 .(
 	jsr _read_byte
 	tax
