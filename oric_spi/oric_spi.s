@@ -128,7 +128,6 @@ gorun
   
 
   	ldx SAVE_RETSTACK
-	
 	txs
 
 	lda RUN+1
@@ -476,7 +475,8 @@ _init
 ;             |||| 
 	lda #%11111110
 	sta via_ddra
-	jmp _deselect
+	rts
+//	jmp _deselect
 .)
 
 
