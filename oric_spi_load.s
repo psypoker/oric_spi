@@ -125,25 +125,20 @@ skipy
 gorun
 
 	jsr _deinit
-	
-  //  jsr $f8b8  // reset via nmi etc...
+ 
 //	sei
 	ldx retstack
-	 
-	 
-	lda RUN
- 
-	sta $101,x
-	lda RUN+1
-	 
-	sta $102,x
-
 	txs
-	cli
 
+	lda RUN+1
+	pha
+	lda RUN
+	pha
+	
 	lda #"R"+128
 	sta $bb80+39
-
+ 
+	cli
 	rts
 	
 
@@ -156,6 +151,8 @@ exit
 	rts
 .)
 
+ 
+ 
 _deinit
 .(
 	
@@ -193,6 +190,7 @@ _readtextresp
 .(
 	lda #0
 	sta _stringbuff
+	 
 	jsr _recvString
 	lda _stringbuff
 	bne _readtextresp
@@ -280,7 +278,7 @@ _read_byte
 
    	rol				// bit 0
  
-    // result dans   a !
+    // result dans A !
 
 	rts
 .)
@@ -370,13 +368,15 @@ SUM		= $80
 	sty SUM
 	sty SUM+1
 	
-	sec
+ 
+  	sec
 	lda RUN
 	sbc #1
 	sta RUN
 	lda RUN+1
 	sbc #0
 	sta RUN+1
+   
 
 	jmp _readTape
  .)
@@ -397,7 +397,7 @@ loop
 	bne skip
 	lda #0 
 	sta $bb80+38
-	bne skip2
+	beq skip2
 skip
 	inc $bb80+38
 skip2
@@ -644,7 +644,7 @@ EOS_OR_256
  
 
  
-_readByte // y preservé !
+_readByte  
 .(
 	jsr _read_byte
 	tax
@@ -720,7 +720,9 @@ osdk_start
 	sta sp+1
 
 	stx retstack
+ 
 	jsr _load_special_chars
+ 
 	jmp _main
 .)
 
