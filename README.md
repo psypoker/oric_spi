@@ -44,7 +44,7 @@ in analog inputs , you are sure to burn the teensy.
   History:
   As I wanted to make speaking my oric atmos with external world via serial at first, i went to interface it with a microcontroller, 
   trying with a teensy++2.0, it worked but was a bit slow in bauds as on oric side , i have to wait for the data to be read on     
-  microcontroller side... So i've changed for a more powerfull teensy running at 96Mhz (it works at 72Mhz), enable to catch at 
+  microcontroller side... So i've changed for a more powerful teensy running at 96Mhz (it works at 72Mhz), enable to catch at 
   microsecond scale the changes on digital pins, no more wait on oric side, best speed !
     -Raw transfert (no checksum) from teensy progmem to oric ram done at 65K bauds
     -Transfert from sd to oric with checksum calculation/check done at 52K bauds
